@@ -111,105 +111,105 @@ int main()
     ll qy = y3;
 
     cout << "Public Key Q = (" << qx << "," << qy << ")" << endl;
-
-    ll k1 = 3;
-
-    ll M1x = 6;
-    ll M1y = 3;
-
-    // C11 = k1 * G
-    multiply(gx, gy, k1, p);
-
-    ll C11x = x3;
-    ll C11y = y3;
-
-    // C12 = M1 + k1 * Q
-    multiply(qx, qy, k1, p);
-
-    ll k1Qx = x3;
-    ll k1Qy = y3;
-
-    add(M1x, M1y, k1Qx, k1Qy, p);
-
-    ll C12x = x3;
-    ll C12y = y3;
-
-    ll k2 = 4;
-
-    ll M2x = 3;
-    ll M2y = 1;
-
-    // C21 = k2 * G
-    multiply(gx, gy, k2, p);
-
-    ll C21x = x3;
-    ll C21y = y3;
-
-    // C22 = M2 + k2 * Q
-    multiply(qx, qy, k2, p);
-
-    ll k2Qx = x3;
-    ll k2Qy = y3;
-
-    add(M2x, M2y, k2Qx, k2Qy, p);
-
-    ll C22x = x3;
-    ll C22y = y3;
-
-    cout << "\nCiphertext of M1:" << endl;
-    cout << "C11 = (" << C11x << "," << C11y << ")" << endl;
-    cout << "C12 = (" << C12x << "," << C12y << ")" << endl;
-    cout << "\nCiphertext of M2:" << endl;
-    cout << "C21 = (" << C21x << "," << C21y << ")" << endl;
-    cout << "C22 = (" << C22x << "," << C22y << ")" << endl;
-    // C1' = C11 + C21
-    add(C11x, C11y, C21x, C21y, p);
-
-    ll C1x = x3;
-    ll C1y = y3;
-
-    // C2' = C12 + C22
-    add(C12x, C12y, C22x, C22y, p);
-
-    ll C2x = x3;
-    ll C2y = y3;
-
-    cout << "\nHomomorphic Ciphertext:" << endl;
-
-    cout << "C1' = C11 + C21 = (" << C1x << "," << C1y << ")" << endl;
-    cout << "C2' = C12 + C22 = (" << C2x << "," << C2y << ")" << endl;
-    // d * C1'
-    multiply(C1x, C1y, d, p);
-
-    ll dC1x = x3;
-    ll dC1y = y3;
-
-    // -dC1'
-    ll negdC1x = dC1x;
-    ll negdC1y = (p - dC1y) % p;
-
-    // M1 + M2 = C2' - dC1'
-    add(C2x, C2y, negdC1x, negdC1y, p);
-
-    ll decryptedX = x3;
-    ll decryptedY = y3;
-
-    cout << "\nDecrypted M1 + M2:" << endl;
-    cout << "(" << decryptedX << "," << decryptedY << ")" << endl;
-    add(M1x, M1y, M2x, M2y, p);
-
-    ll directX = x3;
-    ll directY = y3;
-
-    cout << "\nDirect M1 + M2:" << endl;
-    cout << "(" << directX << "," << directY << ")" << endl;
-
-    if (decryptedX == directX && decryptedY == directY)
-        cout << "\nHomomorphic property verified!" << endl;
-    else
-        cout << "\nHomomorphic property failed!" << endl;
-
     /*
+        ll k1 = 3;
+
+        ll M1x = 6;
+        ll M1y = 3;
+
+        // C11 = k1 * G
+        multiply(gx, gy, k1, p);
+
+        ll C11x = x3;
+        ll C11y = y3;
+
+        // C12 = M1 + k1 * Q
+        multiply(qx, qy, k1, p);
+
+        ll k1Qx = x3;
+        ll k1Qy = y3;
+
+        add(M1x, M1y, k1Qx, k1Qy, p);
+
+        ll C12x = x3;
+        ll C12y = y3;
+
+        ll k2 = 4;
+
+        ll M2x = 3;
+        ll M2y = 1;
+
+        // C21 = k2 * G
+        multiply(gx, gy, k2, p);
+
+        ll C21x = x3;
+        ll C21y = y3;
+
+        // C22 = M2 + k2 * Q
+        multiply(qx, qy, k2, p);
+
+        ll k2Qx = x3;
+        ll k2Qy = y3;
+
+        add(M2x, M2y, k2Qx, k2Qy, p);
+
+        ll C22x = x3;
+        ll C22y = y3;
+
+        cout << "\nCiphertext of M1:" << endl;
+        cout << "C11 = (" << C11x << "," << C11y << ")" << endl;
+        cout << "C12 = (" << C12x << "," << C12y << ")" << endl;
+        cout << "\nCiphertext of M2:" << endl;
+        cout << "C21 = (" << C21x << "," << C21y << ")" << endl;
+        cout << "C22 = (" << C22x << "," << C22y << ")" << endl;
+        // C1' = C11 + C21
+        add(C11x, C11y, C21x, C21y, p);
+
+        ll C1x = x3;
+        ll C1y = y3;
+
+        // C2' = C12 + C22
+        add(C12x, C12y, C22x, C22y, p);
+
+        ll C2x = x3;
+        ll C2y = y3;
+
+        cout << "\nHomomorphic Ciphertext:" << endl;
+
+        cout << "C1' = C11 + C21 = (" << C1x << "," << C1y << ")" << endl;
+        cout << "C2' = C12 + C22 = (" << C2x << "," << C2y << ")" << endl;
+        // d * C1'
+        multiply(C1x, C1y, d, p);
+
+        ll dC1x = x3;
+        ll dC1y = y3;
+
+        // -dC1'
+        ll negdC1x = dC1x;
+        ll negdC1y = (p - dC1y) % p;
+
+        // M1 + M2 = C2' - dC1'
+        add(C2x, C2y, negdC1x, negdC1y, p);
+
+        ll decryptedX = x3;
+        ll decryptedY = y3;
+
+        cout << "\nDecrypted M1 + M2:" << endl;
+        cout << "(" << decryptedX << "," << decryptedY << ")" << endl;
+        add(M1x, M1y, M2x, M2y, p);
+
+        ll directX = x3;
+        ll directY = y3;
+
+        cout << "\nDirect M1 + M2:" << endl;
+        cout << "(" << directX << "," << directY << ")" << endl;
+
+        if (decryptedX == directX && decryptedY == directY)
+            cout << "\nHomomorphic property verified!" << endl;
+        else
+            cout << "\nHomomorphic property failed!" << endl;
+    */
+
     // Basic EC-ElGamal encryption and decryption.
     ll encK = 3;
     ll encMx = 6;
@@ -241,7 +241,6 @@ int main()
     add(encC2x, encC2y, encDC1x, (p - encDC1y) % p, p);
 
     cout << "Decrypted message: (" << x3 << "," << y3 << ")" << endl;
-    */
 
     return 0;
 }
