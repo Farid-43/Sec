@@ -1,6 +1,46 @@
+// cipher
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
+
+string stb(string s)
+{
+    string bin = "";
+    ll i, j, k;
+    char c;
+    for (i = 0; i < s.size(); i++)
+    {
+        c = s[i];
+        for (j = 128; j > 0; j /= 2)
+        {
+            if (c & j)
+                bin += '1';
+            else
+                bin += '0';
+        }
+    }
+    return bin;
+}
+
+string bts(string bin)
+{
+    ll i, j, k;
+    char c;
+    string s;
+    for (i = 0; i < bin.length(); i += 8)
+    {
+        c = 0;
+        for (j = 0; j < 8; j++)
+        {
+            c *= 2;
+            if (bin[i + j] == '1')
+                c += 1;
+        }
+        s += c;
+    }
+    cout << "Msg: "s << endl;
+    return s;
+}
 
 int main()
 {
@@ -36,18 +76,18 @@ int main()
             string s = transposed[row][col];
             char c;
             ll j, i;
-            string bin = "";
-            for (i = 0; i < s.length(); i++)
-            {
-                c = s[i];
-                for (j = 128; j > 0; j /= 2)
-                {
-                    if (c & j)
-                        bin += '1';
-                    else
-                        bin += '0';
-                }
-            }
+            string bin = stb(s);
+            // for (i = 0; i < s.length(); i++)
+            // {
+            //     c = s[i];
+            //     for (j = 128; j > 0; j /= 2)
+            //     {
+            //         if (c & j)
+            //             bin += '1';
+            //         else
+            //             bin += '0';
+            //     }
+            // }
             cout << "\nString\t" << s << endl;
             cout << "Binary\t" << bin << endl;
 
@@ -80,18 +120,18 @@ int main()
             }
             cout << "DEC\t" << dec << endl;
 
-            string org = "";
-            for (i = 0; i < dec.length(); i += 8)
-            {
-                c = 0;
-                for (j = 0; j < 8; j++)
-                {
-                    c *= 2;
-                    if (dec[i + j] == '1')
-                        c += 1;
-                }
-                org += c;
-            }
+            string org = bts(dec);
+            // for (i = 0; i < dec.length(); i += 8)
+            // {
+            //     c = 0;
+            //     for (j = 0; j < 8; j++)
+            //     {
+            //         c *= 2;
+            //         if (dec[i + j] == '1')
+            //             c += 1;
+            //     }
+            //     org += c;
+            // }
             cout << "Original msg:\t" << org << endl;
 
             recovered[col][row] = org;

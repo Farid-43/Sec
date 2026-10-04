@@ -1,57 +1,71 @@
-#include<bits/stdc++.h>
+// rsa
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 
-ll gcd(ll a, ll b){
+ll gcd(ll a, ll b)
+{
     ll t;
-    while(b!=0){
+    while (b != 0)
+    {
         t = b;
-        b= a%b;
+        b = a % b;
         a = t;
     }
     return a;
 }
 
-ll modp(ll b, ll p, ll m){
-    ll r=1;
-    while(p){
-        r = (r*b)%m;
+ll modp(ll b, ll p, ll m)
+{
+    ll r = 1;
+    while (p)
+    {
+        r = (r * b) % m;
         p--;
     }
     return r;
 }
 
-ll modin(ll x, ll m){
+ll modin(ll x, ll m)
+{
     ll i;
-    for(i=1;i<m;i++){
-        if((x*i)%m ==1) return i;
+    for (i = 1; i < m; i++)
+    {
+        if ((x * i) % m == 1)
+            return i;
     }
     return -1;
 }
 
-ll hs(const string &s, ll m){
+ll hs(const string &s, ll m)
+{
     ll hv = 0;
-    ll p=31;
+    ll p = 31;
 
-    for(char c:s){
-        hv = (hv*p +c)%m;
+    for (char c : s)
+    {
+        hv = (hv * p + c) % m;
     }
     return hv;
-
 }
 
-int main(){
-    ll p=11,q=13;
-    ll n=p*q, phi = (p-1)*(q-1);
+int main()
+{
+    ll p = 11, q = 13;
+    ll n = p * q, phi = (p - 1) * (q - 1);
 
-    ll m=11;
-    ll e,d;
-    for(e=2;e<phi;e++){
-        if(gcd(e,phi)==1) break;
+    ll m = 11;
+    ll e, d;
+    for (e = 2; e < phi; e++)
+    {
+        if (gcd(e, phi) == 1)
+            break;
     }
     // d = modin(e,phi)
-    for(d=1;d<phi;d++){
-        if((e*d)%phi ==1 ) break;
+    for (d = 1; d < phi; d++)
+    {
+        if ((e * d) % phi == 1)
+            break;
     }
 
     /*
@@ -88,26 +102,20 @@ int main(){
     cout<<mm<<endl;
     */
 
-
     // Homomorphic enc
-    ll m1 = 20, m2 =3;
-    ll c1= modp(m1,e,n);
-    cout<<"C1 "<<c1<<endl;
-    ll c2= modp(m2,e,n);
-    cout<<"C2 "<<c2<<endl;
+    ll m1 = 20, m2 = 3;
+    ll c1 = modp(m1, e, n);
+    cout << "C1 " << c1 << endl;
+    ll c2 = modp(m2, e, n);
+    cout << "C2 " << c2 << endl;
 
-    ll c = (c1%n * c2%n)%n;
-    cout<<"C "<<c<<endl;
+    ll c = (c1 % n * c2 % n) % n;
+    cout << "C " << c << endl;
 
-    ll d1 = modp(c1,d,n);
-    cout<<"D1 "<<d1<<endl;
-    ll d2 = modp(c2,d,n);
-    cout<<"D2 "<<d2<<endl;
-    ll dec = modp(c,d,n);
-    cout<<dec<<endl;
-
-
-
-
+    ll d1 = modp(c1, d, n);
+    cout << "D1 " << d1 << endl;
+    ll d2 = modp(c2, d, n);
+    cout << "D2 " << d2 << endl;
+    ll dec = modp(c, d, n);
+    cout << dec << endl;
 }
-
